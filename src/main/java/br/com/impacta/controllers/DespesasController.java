@@ -3,8 +3,11 @@ package br.com.impacta.controllers;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +31,7 @@ public class DespesasController {
 	@RequestMapping("/nova")
 	public ModelAndView nova(ModelAndView mv){
 		mv.setViewName(VIEW_CADASTRO);
+		mv.addObject(new Despesa());
 		return mv;
 	}
 	
@@ -39,10 +43,15 @@ public class DespesasController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ModelAndView salvar(Despesa despesa, ModelAndView mv){
+	public ModelAndView salvar(@Valid @ModelAttribute("despesa") Despesa despesa, ModelAndView mv, Errors errors){
+		mv.setViewName(VIEW_CADASTRO);
+		
+		if(errors.hasErrors()){
+			return mv;
+		}
+		
 		despesasService.salvar(despesa);
 		
-		mv.setViewName(VIEW_CADASTRO);
 		mv.addObject("mensagem", "Despesa criada com sucesso");
 		return mv;
 	}
