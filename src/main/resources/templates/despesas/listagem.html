@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Despesas</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-static-top"></nav>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1>Lista de Despesas</h1>
+			<a class="btn btn-link" href="/despesas/nova">Nova Despesa</a>
+		</div>
+		<div class="panel-body">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th class="text-center col-md-1">#</th>
+						<th class="text-center col-md-3">Descri&ccedil;&atilde;o</th>
+						<th class="text-center col-md-2">Categoria</th>
+						<th class="text-center col-md-2">Data</th>
+						<th class="text-center col-md-2">Valor</th>
+						<th class="text-center col-md-4">Observa&ccedil;&otilde;es</th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr 
+						th:if="${listaDespesas != null && !listaDespesas.isEmpty()}"
+						th:each="despesa : ${listaDespesas}">
+						<td class="text-center" th:text="${despesa.codigo}"></td>
+						<td class="text-left" th:text="${despesa.descricao}"></td>
+						<td class="text-center" th:text="${despesa.categoria.nome}"></td>
+						<td class="text-center" th:text="${#dates.format(despesa.data,'dd/MM/yyyy')}"></td>
+						<td class="text-right" th:text="${#numbers.formatCurrency(despesa.valor)}"></td>
+						<td class="text-left" th:text="${despesa.observacoes}"></td>
+						<td class="text-center">
+							<a class="btn btn-link btn-xs link-exclusao"
+								th:attr="data-codigo=${despesa.codigo}"> 
+								<span class="glyphicon glyphicon-remove"></span>
+							</a>
+						</td>
+					</tr>
+					<tr th:if="${listaDespesas == null || listaDespesas.isEmpty()}">
+						<td class="text-center" colspan="7"><i>NENHUMA DESPESA FOI ENCONTRADA.</i></td>
+					</tr>
+			</table>
+		</div>
+
+		<div class="modal fade" id="confirmaRemocaoModal"
+			data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<form action="/despesas" method="POST">
+					<input type="hidden" name="_method" value="DELETE"/>
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Confirma&ccedil;&atilde;o</h4>
+						</div>
+
+						<div class="modal-body">
+							<span>Deseja realmente remover a despesa ?</span>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-link" id="cancelar">Cancelar</button>
+							<button type="submit" class="btn btn-primary" id="confirmar">Confirmar</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<script src="/js/jquery-3.1.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/despesa-listagem.js"></script>
+</body>
+</html>
