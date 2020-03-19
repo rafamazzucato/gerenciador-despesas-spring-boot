@@ -17,11 +17,11 @@
 				<thead>
 					<tr>
 						<th class="text-center col-md-1">#</th>
-						<th class="text-center col-md-3">Descri&ccedil;&atilde;o</th>
+						<th class="text-center col-md-2">Descri&ccedil;&atilde;o</th>
 						<th class="text-center col-md-2">Categoria</th>
-						<th class="text-center col-md-2">Data</th>
+						<th class="text-center col-md-1">Data</th>
 						<th class="text-center col-md-2">Valor</th>
-						<th class="text-center col-md-4">Observa&ccedil;&otilde;es</th>
+						<th class="text-center col-md-3">Observa&ccedil;&otilde;es</th>
 						<th class="col-md-1"></th>
 					</tr>
 				</thead>
@@ -36,11 +36,14 @@
 						<td class="text-right"
 							th:text="${#numbers.formatCurrency(despesa.valor)}"></td>
 						<td class="text-left" th:text="${despesa.observacoes}"></td>
-						<td class="text-center"><a
-							class="btn btn-link btn-xs link-exclusao"
-							th:attr="data-codigo=${despesa.codigo}"> <span
-								class="glyphicon glyphicon-remove"></span>
-						</a></td>
+						<td class="text-center">
+							<a class="btn btn-link btn-xs " th:href="@{'/despesas/editar/' + ${despesa.codigo}}"> 
+								<span class="glyphicon glyphicon-edit"></span>
+							</a>
+							<a class="btn btn-link btn-xs link-exclusao" th:attr="data-codigo=${despesa.codigo}"> 
+								<span class="glyphicon glyphicon-remove"></span>
+							</a>
+						</td>
 					</tr>
 					<tr th:if="${listaDespesas == null || listaDespesas.isEmpty()}">
 						<td class="text-center" colspan="7"><i>NENHUMA DESPESA

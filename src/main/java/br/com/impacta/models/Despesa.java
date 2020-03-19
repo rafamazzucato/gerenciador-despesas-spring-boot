@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -31,6 +32,7 @@ public class Despesa {
 	private String descricao;
 	
 	@Enumerated(EnumType.STRING)
+	@NotNull(message="Categoria é Obrigatório")
 	private Categoria categoria;
 	
 	@NotNull(message="Data é Obrigatória.")
@@ -40,6 +42,7 @@ public class Despesa {
 	
 	@NotNull(message="Valor é Obrigatório.")
 	@DecimalMin(value="0.05", message="Valor não pode ser menor que R$0,05.")
+	@DecimalMax(value="10000.00", message="Valor não pode ser maior que R$10.000,00")
 	@NumberFormat(pattern="#,##0.00")
 	private BigDecimal valor;
 	private String observacoes;

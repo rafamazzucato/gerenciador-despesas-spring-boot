@@ -1,6 +1,7 @@
 package br.com.impacta.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,16 @@ public class DespesasServiceImpl implements DespesasService {
 	@Override
 	public void deletarPorCodigo(Long codigo) {
 		despesaRepository.deleteById(codigo);
+	}
+
+	@Override
+	public Despesa buscarPorId(Long codigo) {
+		Optional<Despesa> optional = despesaRepository.findById(codigo);
+		
+		if(optional.isPresent()){
+			return optional.get();
+		}
+		
+		return null;
 	}
 }

@@ -7,7 +7,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-static-top"></nav>
-	<form class="form-horizontal" method="POST" action="/despesas">
+	<form class="form-horizontal" method="POST" action="/despesas/nova" th:object="${despesa}" >
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h1>Nova Despesa</h1>
@@ -19,42 +19,48 @@
 					<span th:text="${mensagem}"></span>
 				</div>
 
+				<input type="hidden" th:field="*{codigo}"/>
+
 				<div class="form-group">
 					<label for="descricao" class="col-sm-2 control-label">Descri&ccedil;&atilde;o</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" name="descricao">
+					<div class="col-sm-4 row">
+						<input type="text" class="form-control" th:field="*{descricao}">
 					</div>
+					<span class="col-sm-4" style="color:red;" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></span>
 				</div>
 
 				<div class="form-group">
 					<label for="categoria" class="col-sm-2 control-label">Categoria</label>
-					<div class="col-sm-4">
-						<select class="form-control" name="categoria" id="categoria"
-							th:with="categoria=*{cat}">
+					<div class="col-sm-4 row">
+						<select class="form-control" th:field="*{categoria}">
+							<option value="">Selecione a categoria</option>
 							<option th:each="cat : ${categorias}" th:value="${cat}"
 								th:text="${cat.nome}"></option>
 						</select>
 					</div>
+					<span class="col-sm-4" style="color:red;" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></span>
 				</div>
 
 				<div class="form-group">
 					<label for="data" class="col-sm-2 control-label">Data</label>
-					<div class="col-sm-4">
-						<input type="date" class="form-control" name="data">
+					<div class="col-sm-4 row">
+						<input type="date" class="form-control" th:field="*{data}">
 					</div>
+					<span class="col-sm-4" style="color:red;" th:if="${#fields.hasErrors('data')}" th:errors="*{data}"></span>
 				</div>
 
 				<div class="form-group">
 					<label for="valor" class="col-sm-2 control-label">Valor</label>
-					<div class="col-sm-4">
-						<input type="number" class="form-control" name="valor">
+					<div class="col-sm-4 row">
+						<input type="text" class="form-control" th:field="*{valor}">
 					</div>
+					<span class="col-sm-4" style="color:red;" th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}"></span>
 				</div>
 
 				<div class="form-group">
 					<label for="observacoes" class="col-sm-2 control-label">Observa&ccedil;&otilde;es</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" name="observacoes">
+					<div class="col-sm-4 row">
+						<input type="text" class="form-control" th:field="*{observacoes}">
 					</div>
 				</div>
 

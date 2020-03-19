@@ -8,4 +8,5 @@ public interface DespesasService {
 	public void salvar(Despesa despesa);
 	public List<Despesa> listarDespesas();
 	public void deletarPorCodigo(Long codigo);
+	public Despesa buscarPorId(Long codigo);
 }
